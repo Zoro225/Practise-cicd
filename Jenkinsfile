@@ -8,15 +8,6 @@ pipeline {
 
     stages {
 
-        stage('Install Node') {
-            steps {
-                sh '''
-                curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
-                apt-get install -y nodejs
-                '''
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'
