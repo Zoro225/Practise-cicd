@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:18'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
 
     environment {
         IMAGE_NAME = "aj12321/simple-node-app"
@@ -12,6 +7,15 @@ pipeline {
     }
 
     stages {
+
+        stage('Install Node') {
+            steps {
+                sh '''
+                curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+                apt-get install -y nodejs
+                '''
+            }
+        }
 
         stage('Install Dependencies') {
             steps {
@@ -21,7 +25,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'npm test || true'
+                sh 'npm test'
             }
         }
 
